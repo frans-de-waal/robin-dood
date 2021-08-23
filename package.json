@@ -1,10 +1,13 @@
 {
   "name": "robin-dood",
   "version": "0.1.0",
+  "homepage": "http://frans-de-waal.github.io/robin-dood",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "react": "^17.0.0",
@@ -23,6 +26,7 @@
     "eslint-plugin-prettier": "^3.4.1",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "gh-pages": "^3.2.3",
     "prettier": "^2.3.2",
     "vite": "^2.4.4"
   }
