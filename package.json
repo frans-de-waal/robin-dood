@@ -1,6 +1,6 @@
 {
-  "name": "physics-jam-2021",
-  "version": "0.0.0",
+  "name": "robin-dood",
+  "version": "0.1.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
