@@ -24,6 +24,11 @@ function App() {
     }
   }
 
+  const reset = () => {
+    game.reset()
+    setRunning(false)
+  }
+
   return (
     <div className="root">
       <header className="header">
@@ -31,13 +36,16 @@ function App() {
       </header>
       <div className="content">
         <canvas id="canvas" height="800" width="800" />
-        <button type="button" onClick={start}>
-          Start
-        </button>
-        <button type="button" onClick={stop}>
-          Stop
-        </button>
-        <button type="button" onClick={game.reset}>
+        {running ? (
+          <button type="button" onClick={stop}>
+            Stop
+          </button>
+        ) : (
+          <button type="button" onClick={start}>
+            Start
+          </button>
+        )}
+        <button type="button" onClick={reset}>
           Reset
         </button>
       </div>

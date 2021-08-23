@@ -15,13 +15,13 @@ let scene = null
 const INITIAL_STATE = () => [
   new Particle(
     10,
-    new Sphere(0.5, randomColor('AA')),
+    new Sphere(0.5, randomColor()),
     new Position(1, 1),
     new Velocity(4, 0)
   ),
   new Particle(
     0.4,
-    new Sphere(0.2, randomColor('AA')),
+    new Sphere(0.2, randomColor()),
     new Position(6, 1),
     new Velocity(-4, 0)
   ),
@@ -41,7 +41,6 @@ export function setup() {
 
   scene.progressEntity = (entity, index) => {
     // forces
-    // const totalForce = new Force(0, 0);
     const totalForce = entity.drag(density)
     // acceleration
     const a = totalForce.multiply(1 / entity.mass).add(gravity)
@@ -171,8 +170,11 @@ export function setup() {
 
   scene.draw = () => {
     scene.drawGrid()
+    scene.entities.forEach((entity) => {
+      entity.draw(scene)
+      scene.drawVector(entity.velocity.multiply(0.5), entity.position, 'red')
+    })
     scene.drawScale()
-    scene.entities.forEach((entity) => entity.draw(scene))
   }
 
   scene.canvas.addEventListener('mousemove', (event) => {
@@ -198,7 +200,7 @@ export function setup() {
       scene.entities.push(
         new Particle(
           mass,
-          new Sphere(radius, randomColor('AA')),
+          new Sphere(radius, randomColor()),
           mouseStart.multiply(1 / scene.scale),
           mouse.subtract(mouseStart).multiply(10 / scene.scale)
         )

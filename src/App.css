@@ -1,7 +1,15 @@
+:root {
+  --player: #1be7ffff;
+  --background: #324a5f;
+  --primary: #04724dff;
+  --secondary: #0c1821;
+  --accent: #ff5714ff;
+}
+
 .root {
   height: 100vh;
   width: 100vw;
-  background-color: gray;
+  background-color: var(--background);
 
   display: flex;
   flex-direction: column;
@@ -10,7 +18,7 @@
 }
 
 .header {
-  background-color: #282c34;
+  background-color: var(--secondary);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -25,9 +33,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
 }
 
 canvas {
-  background-color: teal;
+  background-color: var(--background);
+  border: solid 1px white;
 }

@@ -64,7 +64,7 @@ export default class Scene {
   drawScale = () => {
     const { context, height, scale, gridSize } = this
     const size = gridSize * scale // pixels
-    const color = '#E0E'
+    const color = '#000'
     // line
     context.beginPath()
     context.moveTo(size, height - 30)
@@ -110,8 +110,8 @@ export default class Scene {
   draw = () => {
     const { drawGrid, drawScale, entities } = this
     drawGrid()
-    drawScale()
     entities.forEach((entity) => entity.draw(this))
+    drawScale()
   }
 
   progress = () => {
