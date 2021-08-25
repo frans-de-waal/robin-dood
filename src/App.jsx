@@ -35,19 +35,23 @@ function App() {
         <h1>Robin Dood</h1>
       </header>
       <div className="content">
-        <canvas id="canvas" height="640" width="800" />
-        {running ? (
-          <button type="button" onClick={stop}>
-            Stop
+        <div className="sidebar">
+          {running ? (
+            <button type="button" onClick={stop}>
+              Stop
+            </button>
+          ) : (
+            <button type="button" onClick={start}>
+              Start
+            </button>
+          )}
+          <button type="button" onClick={reset}>
+            Reset
           </button>
-        ) : (
-          <button type="button" onClick={start}>
-            Start
-          </button>
-        )}
-        <button type="button" onClick={reset}>
-          Reset
-        </button>
+        </div>
+        <div className="canvas-container">
+          <canvas id="canvas" height="640" width="800" />
+        </div>
       </div>
     </div>
   )

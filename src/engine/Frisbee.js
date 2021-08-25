@@ -11,7 +11,7 @@ export default class Frisbee extends Shape {
    * @param {number} radius The radius of the Frisbee (m).
    * @param {string} color The color of the Frisbee.
    */
-  constructor(radius, color, dragCoefficient = 0.08, image = null) {
+  constructor({ radius, color, dragCoefficient = 0.08, image = null }) {
     super(dragCoefficient, color, image)
     this.radius = radius
   }

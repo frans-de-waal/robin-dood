@@ -1,15 +1,14 @@
 import {
   Actor,
+  Force,
+  Frisbee,
+  oneDimensionalCollision,
   Particle,
   Position,
   Scene,
-  Force,
-  Frisbee,
+  Sphere,
   Vector,
   Velocity,
-  Sphere,
-  oneDimensionalCollision,
-  randomColor,
 } from './engine'
 
 let scene = null
@@ -23,13 +22,13 @@ const WIND_IS = () => new Force(1, 0)
 const ENTITIES_IS = () => [
   new Particle({
     mass: 10,
-    shape: new Frisbee(0.5, randomColor()),
+    shape: new Frisbee({ radius: 0.5, color: '#6fc3df' }),
     position: new Position(1, 1),
     velocity: new Velocity(4, 0),
   }),
   new Particle({
     mass: 0.4,
-    shape: new Frisbee(0.2, randomColor()),
+    shape: new Frisbee({ radius: 0.2, color: '#6fc3df' }),
     position: new Position(6, 1),
     velocity: new Velocity(-4, 0),
   }),
@@ -47,14 +46,11 @@ const PLAYER_IS = () =>
 export function setup() {
   const bounciness = 0.95
   const density = 1.23
-  let mouse = new Position(0, 0)
-  let mouseStart = new Position(0, 0)
-  let dragging = false
   wind = WIND_IS()
   player = PLAYER_IS()
   scene = new Scene('canvas')
   scene.delta = 0.01 // seconds per tick
-  const rotationsPerSecond = 0.2
+  const rotationsPerSecond = 0.1
   const rotationAngle = 2 * Math.PI * scene.delta * rotationsPerSecond
   scene.scale = 100 // pixels per meter
   scene.entities = ENTITIES_IS()
@@ -196,45 +192,38 @@ export function setup() {
   }
 
   scene.draw = () => {
-    scene.drawGrid()
+    // scene.drawGrid()
     scene.entities.forEach((entity) => {
       entity.draw(scene)
-      scene.drawVector(entity.velocity.multiply(0.5), entity.position, 'red')
+      // scene.drawVector(entity.velocity.multiply(0.5), entity.position, 'red')
     })
-    scene.drawVector(wind, new Position(1, 1), '#6fc3df')
+    // scene.drawVector(wind, new Position(1, 1), '#6fc3df')
     player.draw(scene)
-    scene.drawScale()
+    // scene.drawScale()
   }
-
-  scene.canvas.addEventListener('mousemove', (event) => {
+  scene.canvas.addEventListener('mouseup', (event) => {
     const canvasRect = scene.canvas.getBoundingClientRect()
-    mouse = new Position(
+    const mousePos = new Position(
       event.clientX - canvasRect.left,
       event.clientY - canvasRect.top
-    )
-  })
-  scene.canvas.addEventListener('mousedown', (event) => {
-    const canvasRect = scene.canvas.getBoundingClientRect()
-    mouseStart = new Position(
-      event.clientX - canvasRect.left,
-      event.clientY - canvasRect.top
-    )
-    dragging = true
-  })
-  scene.canvas.addEventListener('mouseup', () => {
-    if (dragging) {
-      dragging = false
-      const radius = Math.random() * 0.3 + 0.2
-      const mass = (4 / 3) * Math.PI * radius ** 3 * 4
-      scene.entities.push(
-        new Particle({
-          mass,
-          shape: new Frisbee(radius, randomColor()),
-          position: mouseStart.multiply(1 / scene.scale),
-          velocity: mouse.subtract(mouseStart).multiply(10 / scene.scale),
-        })
+    ).multiply(1 / scene.scale)
+    const radius = 0.2
+    const mass = (4 / 3) * Math.PI * radius ** 3 * 4
+    const direction = mousePos.subtract(player.position).normal
+    const speed = 20
+    const newFrisbee = new Particle({
+      mass,
+      shape: new Frisbee({ radius, color: '#ffe64d', dragCoefficient: 0.5 }),
+      position: player.position,
+      velocity: direction.multiply(speed),
+    })
+    scene.entities.push(newFrisbee)
+    setTimeout(() => {
+      const index = scene.entities.findIndex(
+        (entity) => `${entity.id}` === `${newFrisbee.id}`
       )
-    }
+      scene.entities.splice(index, 1)
+    }, 5000)
   })
 }
 
