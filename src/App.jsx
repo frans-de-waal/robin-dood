@@ -48,6 +48,10 @@ function App() {
           <button type="button" onClick={reset}>
             Reset
           </button>
+          <ul>
+            <li>WASD to move</li>
+            <li>Click to fire</li>
+          </ul>
         </div>
         <div className="canvas-container">
           <canvas id="canvas" height="640" width="800" />
