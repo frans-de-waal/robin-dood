@@ -1,37 +1,32 @@
 import Shape from './Shape'
 
-export default class Sphere extends Shape {
+export default class Frisbee extends Shape {
   radius
 
   /**
-   * Create a new Sphere object.
+   * Create a new Frisbee object.
    *
    * @constructor
    *
-   * @param {number} radius The radius of the Sphere (m).
-   * @param {string} color The color of the Sphere.
+   * @param {number} radius The radius of the Frisbee (m).
+   * @param {string} color The color of the Frisbee.
    */
-  constructor({
-    radius,
-    color,
-    dragCoefficient = 0.47, // https://en.wikipedia.org/wiki/Drag_coefficient
-    image = null,
-  }) {
+  constructor(radius, color, dragCoefficient = 0.08, image = null) {
     super(dragCoefficient, color, image)
     this.radius = radius
   }
 
   /**
-   * Get the frontal area for this Sphere.
+   * Get the frontal area for this Frisbee.
    *
-   * @returns {number} The frontal area of this Sphere.
+   * @returns {number} The frontal area of this Frisbee.
    */
   get area() {
     return Math.PI * this.radius ** 2
   }
 
   /**
-   * Draw this Sphere on the context at the given position.
+   * Draw this Frisbee on the context at the given position.
    *
    * @param {Scene} scene A Scene to draw this shape on.
    * @param {Position} position A position Vector.

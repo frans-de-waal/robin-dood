@@ -1,49 +1,76 @@
 import {
-  Acceleration,
+  Actor,
   Particle,
   Position,
   Scene,
-  Sphere,
+  Force,
+  Frisbee,
   Vector,
   Velocity,
+  Sphere,
   oneDimensionalCollision,
   randomColor,
 } from './engine'
 
 let scene = null
 
-const INITIAL_STATE = () => [
-  new Particle(
-    10,
-    new Sphere(0.5, randomColor()),
-    new Position(1, 1),
-    new Velocity(4, 0)
-  ),
-  new Particle(
-    0.4,
-    new Sphere(0.2, randomColor()),
-    new Position(6, 1),
-    new Velocity(-4, 0)
-  ),
+let wind = null
+
+let player = null
+
+const WIND_IS = () => new Force(1, 0)
+
+const ENTITIES_IS = () => [
+  new Particle({
+    mass: 10,
+    shape: new Frisbee(0.5, randomColor()),
+    position: new Position(1, 1),
+    velocity: new Velocity(4, 0),
+  }),
+  new Particle({
+    mass: 0.4,
+    shape: new Frisbee(0.2, randomColor()),
+    position: new Position(6, 1),
+    velocity: new Velocity(-4, 0),
+  }),
 ]
+
+const PLAYER_IS = () =>
+  new Actor({
+    shape: new Sphere({
+      radius: 0.5,
+      color: '#df740c',
+    }),
+    position: new Position(2, 2),
+  })
 
 export function setup() {
   const bounciness = 0.95
-  const density = 1.2
+  const density = 1.23
   let mouse = new Position(0, 0)
   let mouseStart = new Position(0, 0)
   let dragging = false
-  const gravity = new Acceleration(0, 9.81)
+  wind = WIND_IS()
+  player = PLAYER_IS()
   scene = new Scene('canvas')
   scene.delta = 0.01 // seconds per tick
+  const rotationsPerSecond = 0.2
+  const rotationAngle = 2 * Math.PI * scene.delta * rotationsPerSecond
   scene.scale = 100 // pixels per meter
-  scene.entities = INITIAL_STATE()
+  scene.entities = ENTITIES_IS()
+
+  scene.progress = () => {
+    const { entities, progressEntity } = scene
+    wind = wind.rotate(-rotationAngle)
+    player.progress(scene.delta)
+    entities.filter((entity) => !entity.fixed).forEach(progressEntity)
+  }
 
   scene.progressEntity = (entity, index) => {
     // forces
-    const totalForce = entity.drag(density)
+    const totalForce = entity.drag(density).add(wind)
     // acceleration
-    const a = totalForce.multiply(1 / entity.mass).add(gravity)
+    const a = totalForce.multiply(1 / entity.mass)
     // change in velocity
     const dV = a.multiply(scene.delta)
     // new velocity
@@ -174,6 +201,8 @@ export function setup() {
       entity.draw(scene)
       scene.drawVector(entity.velocity.multiply(0.5), entity.position, 'red')
     })
+    scene.drawVector(wind, new Position(1, 1), '#6fc3df')
+    player.draw(scene)
     scene.drawScale()
   }
 
@@ -198,12 +227,12 @@ export function setup() {
       const radius = Math.random() * 0.3 + 0.2
       const mass = (4 / 3) * Math.PI * radius ** 3 * 4
       scene.entities.push(
-        new Particle(
+        new Particle({
           mass,
-          new Sphere(radius, randomColor()),
-          mouseStart.multiply(1 / scene.scale),
-          mouse.subtract(mouseStart).multiply(10 / scene.scale)
-        )
+          shape: new Frisbee(radius, randomColor()),
+          position: mouseStart.multiply(1 / scene.scale),
+          velocity: mouse.subtract(mouseStart).multiply(10 / scene.scale),
+        })
       )
     }
   })
@@ -219,7 +248,9 @@ export function stop() {
 
 export function reset() {
   scene.stop()
-  scene.entities = INITIAL_STATE()
+  scene.entities = ENTITIES_IS()
+  wind = WIND_IS()
+  player = PLAYER_IS()
   scene.clear()
   scene.draw()
 }

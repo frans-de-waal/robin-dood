@@ -1,9 +1,9 @@
 :root {
-  --tron-orange: #df740c;
-  --tron-yellow: #ffe64d;
-  --tron-cyan: #6fc3df;
-  --tron-light: #e6ffff;
-  --tron-dark: #0c141f;
+  --orange: #df740c;
+  --yellow: #ffe64d;
+  --cyan: #6fc3df;
+  --light: #e6ffff;
+  --dark: #0c141f;
 
   --font-primary: 'Orbitron', sans-serif;
   --font-secondary: 'Montserrat', sans-serif;
@@ -13,13 +13,13 @@ body {
   font-size: 16px;
   font-weight: 500;
   font-family: var(--font-secondary);
-  color: var(--tron-light);
+  color: var(--light);
 }
 
 .root {
   height: 100vh;
   width: 100vw;
-  background-color: var(--tron-dark);
+  background-color: var(--dark);
 
   display: flex;
   flex-direction: column;
@@ -28,21 +28,21 @@ body {
 }
 
 .header {
-  background-color: var(--tron-dark);
+  background-color: var(--dark);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   border-width: 0 0 2px 0;
   border-style: solid;
-  border-color: var(--tron-light);
+  border-color: var(--light);
   padding: 0 2em;
 }
 
 h1 {
   font-family: var(--font-primary);
   font-weight: bold;
-  color: var(--tron-light);
+  color: var(--light);
 }
 
 .content {
@@ -54,20 +54,20 @@ h1 {
 }
 
 canvas {
-  background-color: var(--tron-dark);
-  border: solid 2px var(--tron-light);
+  background-color: var(--dark);
+  border: solid 2px var(--light);
   border-radius: 0.3em;
 }
 
 button {
   background-color: transparent;
-  border-color: var(--tron-yellow);
+  border-color: var(--yellow);
   border-style: solid;
   border-width: 2px;
   padding: 0.5em 1em;
   border-radius: 0.2em;
   min-width: 6em;
-  color: var(--tron-yellow);
+  color: var(--yellow);
   font-family: var(--font-primary);
   font-size: medium;
   cursor: pointer;

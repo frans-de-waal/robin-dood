@@ -172,4 +172,25 @@ export default class Vector {
   power(power) {
     return this.normal.multiply(this.size ** power)
   }
+
+  /**
+   * Rotate this Vector by the angle theta, measured radians, counterclockwise.
+   *
+   * Note: π rad = 180°
+   *
+   * @param {number} theta The angle, measured in radians, to rotate the vector counterclockwise.
+   *
+   * @returns {Vector} A new Vector with the same size as this Vector, but rotated by angle theta, counterclockwise.
+   */
+  rotate(theta) {
+    const transformationMatrix = [
+      new Vector(Math.cos(theta), Math.sin(theta)),
+      new Vector(-Math.sin(theta), Math.cos(theta)),
+    ]
+
+    return new Vector(
+      transformationMatrix[0].dot(this),
+      transformationMatrix[1].dot(this)
+    )
+  }
 }

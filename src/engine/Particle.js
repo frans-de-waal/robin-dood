@@ -33,13 +33,13 @@ export default class Particle {
    * @param {Velocity} velocity Initial velocity of the Particle.
    * @param {boolean} fixed Whether the Particle can move or not.
    */
-  constructor(
+  constructor({
     mass,
     shape,
     position = new Position(0, 0),
     velocity = new Velocity(0, 0),
-    fixed = false
-  ) {
+    fixed = false,
+  }) {
     this.id = id()
     this.mass = mass
     this.shape = shape
