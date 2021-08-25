@@ -35,7 +35,7 @@ function App() {
         <h1>Robin Dood</h1>
       </header>
       <div className="content">
-        <canvas id="canvas" height="800" width="800" />
+        <canvas id="canvas" height="640" width="800" />
         {running ? (
           <button type="button" onClick={stop}>
             Stop
