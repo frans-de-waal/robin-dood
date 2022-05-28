@@ -1,15 +1,23 @@
 # Robin Dood
 
-Physics Game Jam 2021
+Physics Game
 
-- Live demo: https://frans-de-waal.github.io/robin-dood/
+- Live demo: https://robin-dood.herokuapp.com/
 
 ## Notes
 
 ### Heroku
 
-Set buildpack for Node.js
+Deployment: https://vitejs.dev/guide/static-deploy.html#heroku
+
+Set buildpack for Node.js (needed to build)
 
 ```shell
 $ heroku buildpacks:set heroku/nodejs
+```
+
+Set buildpack for static sites (serve the built site)
+
+```shell
+$ heroku buildpacks:set https://github.com/heroku/heroku-buildpack-static.git
 ```
