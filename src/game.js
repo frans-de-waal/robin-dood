@@ -201,7 +201,7 @@ export function setup() {
     player.draw(scene)
     // scene.drawScale()
   }
-  scene.canvas.addEventListener('mouseup', (event) => {
+  scene.canvas.addEventListener('mousedown', (event) => {
     const canvasRect = scene.canvas.getBoundingClientRect()
     const mousePos = new Position(
       event.clientX - canvasRect.left,
