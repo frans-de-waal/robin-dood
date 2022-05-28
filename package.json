@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "start": "vite preview"
+    "preview": "vite preview"
   },
   "dependencies": {
     "react": "^17.0.0",
